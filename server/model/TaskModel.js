@@ -11,7 +11,7 @@ const taskSchema = new mongoose.Schema({
     require: true
   },
   deadline: {
-    type: String,
+    type: Date,
     require: true
   },
   Status: {

@@ -4,9 +4,9 @@ import { UserModel } from '../model/UserModel.js'
 import jwt from 'jsonwebtoken'
 export const UserRoute = express.Router()
 
-UserRoute.post("/signup", async (req, res) => {
+UserRoute.post("/create-users", async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, tasks } = req.body;
 
     const checkUserEmail = await UserModel.findOne({ email });
 
@@ -26,6 +26,7 @@ UserRoute.post("/signup", async (req, res) => {
 
     const newUser = await UserModel.create({
       ...req.body,
+      // tasks: tasks || [],
       password: hashedPassword,
     });
 
@@ -60,6 +61,7 @@ UserRoute.post("/login", async (req, res) => {
 
     return res.status(200).json({
       message: "Logged in successfully",
+      email: user.email,
       token,
       userID: user._id,
       username: user.username

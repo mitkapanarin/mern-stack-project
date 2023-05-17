@@ -21,7 +21,7 @@ TaskRoute.get("/get-all-tasks", async (req, res) => {
   }
 })
 
-TaskRoute.post("/create-task", async (req, res) => {
+TaskRoute.post("/create-task/:userId", async (req, res) => {
   try {
     const { task, description, deadline, status, userOwner } = req.body
     const newTask = new TaskModel(req.body)
@@ -52,6 +52,20 @@ TaskRoute.delete("/delete-task", async (req, res) => {
   }
 })
 
-TaskRoute.put("/update-one-task", async (req, res) => {
-  const { id, task, description, status, deadline } = req.body
+TaskRoute.put("/update-one-task/:id", async (req, res) => {
+  try {
+    const { id } = req.params    // ID of the task to be updated
+    const updatedTask = await TaskModel.findByIdAndUpdate(id, req.body, { new: true }) //req.body contains the updated fields for the task
+    res.status(200).json({                                      // {new: true} option is used to return the updated task object after updating it in the database
+      message: "Task updated successfully",
+      updatedTask
+    })
+  }
+  catch (err) {
+    res.status(500).json({
+      message: "Failed to update task",
+      error: err.message
+    })
+  }
 })
+
