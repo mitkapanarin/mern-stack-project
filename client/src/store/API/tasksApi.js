@@ -9,7 +9,7 @@ export const tasksApi = createApi({
   }),
   endpoints: (builder) => ({
     getAllTasks: builder.query({
-      query: ({ userID }) => `/all-tasks/${userID}`,
+      query: ({ userID }) => `/get-all-tasks/${userID}`,
       providesTags: ["Tasks"],
     }),
     createTask: builder.mutation({
@@ -35,6 +35,7 @@ export const tasksApi = createApi({
       }),
       invalidatesTags: ["Tasks"],
     }),
+    
   }),
 });
 

@@ -6,13 +6,14 @@ import { useSelector } from 'react-redux'
 const AddTask = () => {
   const userOwner = useSelector(x=>x.User.userID)
   console.log(userOwner)
+
   const [isOpen, setIsOpen] = useState(false)
   const [data, setData] = useState({
     task: "",
-    deadline: new Date(), // Set default deadline value as current date/time
-    status: "", // Use lowercase "status" instead of "Status"
+    deadline: new Date(), 
+    status: false, 
     description: "",
-    userOwner // Add userOwner field for the ObjectId reference
+    userOwner 
   });
   
 
@@ -29,11 +30,8 @@ const AddTask = () => {
     e.preventDefault();
     try {
       await createTask({
-        userId: state.User.userID,
-        body: {
-          ...data,
-          status: false,
-        },
+        userID: userOwner,
+        body: data,
       });
       setData({
         task: "",

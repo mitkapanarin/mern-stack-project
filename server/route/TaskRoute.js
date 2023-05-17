@@ -3,11 +3,11 @@ import { TaskModel } from '../model/TaskModel.js'
 
 export const TaskRoute = express.Router()
 
-TaskRoute.get("/get-all-tasks", async (req, res) => {
+TaskRoute.get("/get-all-tasks/:userID", async (req, res) => {
   try {
-    const { userOwner } = req.body
+    const { userID } = req.params
     const getAllTasks = await TaskModel.find({
-      userOwner
+      userOwner: userID
     })
     res.status(200).json({
       message: "success",
@@ -37,10 +37,10 @@ TaskRoute.post("/create-task/:userId", async (req, res) => {
   }
 })
 
-TaskRoute.delete("/delete-task", async (req, res) => {
+TaskRoute.delete("/delete-task/:userId/:taskId", async (req, res) => {
   try {
-    const { id } = req.body
-    await TaskModel.findByIdAndDelete(id)
+    const { taskId } = req.params
+    await TaskModel.findByIdAndDelete(taskId)
     res.status(200).json({
       message: "Task deleted successfully"
     })
@@ -52,20 +52,26 @@ TaskRoute.delete("/delete-task", async (req, res) => {
   }
 })
 
-TaskRoute.put("/update-one-task/:id", async (req, res) => {
+TaskRoute.put("/update-task/:userId/:taskId", async (req, res) => {
   try {
-    const { id } = req.params    // ID of the task to be updated
-    const updatedTask = await TaskModel.findByIdAndUpdate(id, req.body, { new: true }) //req.body contains the updated fields for the task
-    res.status(200).json({                                      // {new: true} option is used to return the updated task object after updating it in the database
+    const { userId, taskId } = req.params;
+    const { task, deadline, status, description } = req.body;
+    const updatedTask = await TaskModel.findByIdAndUpdate(taskId, req.body, { new: true });
+    res.status(200).json({
       message: "Task updated successfully",
-      updatedTask
-    })
-  }
-  catch (err) {
+      updatedTask,
+    });
+  } catch (err) {
     res.status(500).json({
       message: "Failed to update task",
-      error: err.message
-    })
+    });
   }
-})
+});
+
+
+
+
+
+
+
 
