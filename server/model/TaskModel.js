@@ -4,17 +4,17 @@ import mongoose from 'mongoose'
 const taskSchema = new mongoose.Schema({
   task: {
     type: String,
-    require: true
+    required: true
   },
   description: {
     type: String,
-    require: true
+    required: true
   },
   deadline: {
     type: Date,
-    require: true
+    required: true
   },
-  Status: {
+  status: {
     type: String
   },
   userOwner: {
@@ -22,7 +22,7 @@ const taskSchema = new mongoose.Schema({
     ref: "User",
     required: true
   }
-})
+});
 
 
 export const TaskModel = mongoose.model("Task", taskSchema)

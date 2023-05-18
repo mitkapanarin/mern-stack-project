@@ -22,13 +22,21 @@ export const userApi = createApi({
     }),
 
     // Define an "updateUser" endpoint that sends a PUT request to a URL that includes the ID of the user to update
+    // updateUser: builder.mutation({
+    //   uery: ({ userID, updatedData }) => ({
+    //     url: `/update-user/${userID}`,
+    //     method: "PUT",
+    //     body: updatedData
+    //   }),
+    //   invalidatesTags: ["Users"], // if we have mutation we use invalidatesTags
+    // }),
     updateUser: builder.mutation({
       query: (body) => ({
-        url: `/update-user/${body.id}`,
+        url: `/update-user/${body.userID}`,
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["Users"], // if we have mutation we use invalidatesTags
+      invalidatesTags: ["Users"],
     }),
 
     // Define a "createUser" endpoint that sends a POST request to the root URL of the API

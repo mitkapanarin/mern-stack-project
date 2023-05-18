@@ -29,19 +29,16 @@ export const userSlice = createSlice({ // Creating a Redux slice named "userSlic
       localStorage.setItem("userState", JSON.stringify(state));
       // Storing the updated state in the localStorage as a stringified JSON
     },
-    updateUserStateData: (state, action, username) => {
-      const { email, userID, token } = action.payload;
-      // Extracting email, id, and token from the action payload
-
-      state.username = username;
+    updateUserStateData: (state, action) => {
+      const { email, userID, token, username } = action.payload;
       state.email = email;
       state.userID = userID;
       state.token = token;
-      // Updating the state properties with the new values from the action payload
-
-      localStorage.setItem("userState", JSON.stringify(state));
-      // Storing the updated state in the localStorage as a stringified JSON
+      state.username = username;
+    
+      localStorage.setItem('userState', JSON.stringify(state));
     },
+
     logout: (state) => {
       state.email = "";
       state.token = "";

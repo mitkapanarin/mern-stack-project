@@ -29,7 +29,7 @@ const Login = () => {
         }
         catch (err) {
             console.log("error occured")
-            toast.success("Couldn't login, please try again")
+            toast.error("Couldn't login, please try again")
         }
     }
 

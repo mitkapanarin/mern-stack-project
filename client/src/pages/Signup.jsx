@@ -29,17 +29,14 @@ const Signup = () => {
         try {
             await toast.promise(
                 createUser(data),
-                {
-                    pending: 'Creating account please wait...',
-                    success: 'Account created successfully 👌',
-                    error: 'An error occured, please try again  🤯'
-                }
+                toast.success("Account created successfully 👌")
             )
             console.log(data)
             navigate("/login")
         }
         catch (err) {
             console.log(err)
+            toast.success("Couldn't create acount, please try again")
         }
     }
 

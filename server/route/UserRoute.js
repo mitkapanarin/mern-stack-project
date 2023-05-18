@@ -57,7 +57,7 @@ UserRoute.post("/login", async (req, res) => {
 
     const token = jwt.sign({ userID: user._id }, process.env.JWT_SECRET_KEY, {
       expiresIn: "1d"
-    })
+    });
 
     return res.status(200).json({
       message: "Logged in successfully",
@@ -65,9 +65,89 @@ UserRoute.post("/login", async (req, res) => {
       token,
       userID: user._id,
       username: user.username
-    })
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+UserRoute.put("/update-user/:userID", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const { username, email, password, tasks } = req.body;
+    const updatedUser = await UserModel.findByIdAndUpdate(userID, { username, email, password, tasks }, { new: true });
+
+    if (!updatedUser) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    // Emit an event or send a response with the updated user data
+    res.status(200).json({
+      message: "User updated successfully",
+      updatedUser,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to update user",
+    });
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+UserRoute.delete("/delete-users/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedUser = await UserModel.findByIdAndDelete(id);
+    
+    if (!deletedUser) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+    
+    res.status(204).json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+UserRoute.get("/get-one-user/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await UserModel.findById(userId);
+    
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+    
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+UserRoute.get("/get-all-users", async (req, res) => {
+  try {
+    const users = await UserModel.find();
+    res.status(200).json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
