@@ -1,7 +1,7 @@
 ## issues of the app
 
 * user can still access the login/signup page even after logging in the dashboard
-* the popup toaster gives the wrong message on the wrong status issue
+* the popup toaster gives the wrong message on the wrong status issue/////solved
 
 ### Future features
 
@@ -14,5 +14,4 @@
 * MEAN, JamStack -> Nextjs, etc.
 
 
-
-userRoute---->tasks????
+* userRoute---->tasks????

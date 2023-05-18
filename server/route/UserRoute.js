@@ -100,7 +100,22 @@ UserRoute.put("/update-user/:userID", async (req, res) => {
   }
 });
 
+UserRoute.get("/get-one-user/:userID", async (req, res) => {
+  try {
+    const { userID } = req.params;
+    const user = await UserModel.findById(userID);
 
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 
 
@@ -130,22 +145,7 @@ UserRoute.delete("/delete-users/:id", async (req, res) => {
   }
 });
 
-UserRoute.get("/get-one-user/:id", async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const user = await UserModel.findById(userId);
 
-    if (!user) {
-      res.status(404).json({ message: "User not found" });
-      return;
-    }
-
-    res.status(200).json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 UserRoute.get("/get-all-users", async (req, res) => {
   try {

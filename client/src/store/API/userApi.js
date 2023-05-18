@@ -17,7 +17,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     // Define a "getUser" endpoint that sends a GET request to the root URL of the API
     getUser: builder.query({
-      query: (name) => `/`,
+      query: (name) => `/get-one-user/:userID`,
       providesTags: ["Users"], // if we have query we use providesTags
     }),
 
@@ -47,6 +47,8 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+
+
   }),
 });
 

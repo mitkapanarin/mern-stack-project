@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useUpdateUserMutation } from '../store/API/userApi';
 import { updateUserStateData } from '../store/Slices/userSlice';
 import { toast } from 'react-toastify';
+import UserInformations from './UserInformations';
 
 const User = () => {
   const userData = useSelector((state) => state.User);
@@ -37,7 +38,9 @@ const User = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+<>
+<UserInformations/>
+<form onSubmit={handleSubmit}>
       <div className="mb-6">
         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Enter your new username
@@ -91,6 +94,7 @@ const User = () => {
       </button>
       <div className="text-2xl text-center"></div>
     </form>
+</>
   );
 };
 
