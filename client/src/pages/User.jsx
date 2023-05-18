@@ -13,16 +13,15 @@ const User = () => {
 
   const [data, setData] = useState(userData);
 
-  const [updateUser, { isLoading, isError }] = useUpdateUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await updateUser(data);
-      const updatedUserData = response.data;
-      dispatch(updateUserStateData(updatedUserData));
+      await updateUser(data)
+      dispatch(updateUserStateData(data))
       toast.success('User updated successfully');
     } catch (err) {
       console.log('cannot update user', err);

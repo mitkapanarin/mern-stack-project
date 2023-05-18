@@ -21,15 +21,6 @@ export const userApi = createApi({
       providesTags: ["Users"], // if we have query we use providesTags
     }),
 
-    // Define an "updateUser" endpoint that sends a PUT request to a URL that includes the ID of the user to update
-    // updateUser: builder.mutation({
-    //   uery: ({ userID, updatedData }) => ({
-    //     url: `/update-user/${userID}`,
-    //     method: "PUT",
-    //     body: updatedData
-    //   }),
-    //   invalidatesTags: ["Users"], // if we have mutation we use invalidatesTags
-    // }),
     updateUser: builder.mutation({
       query: (body) => ({
         url: `/update-user/${body.userID}`,
@@ -39,7 +30,6 @@ export const userApi = createApi({
       invalidatesTags: ["Users"],
     }),
 
-    // Define a "createUser" endpoint that sends a POST request to the root URL of the API
     createUser: builder.mutation({
       query: (body) => ({
         url: "/create-users",
@@ -49,7 +39,6 @@ export const userApi = createApi({
       invalidatesTags: ["Users"],
     }),
 
-    // Define a "loginUser" endpoint that sends a POST request to a URL for user authentication
     loginUser: builder.mutation({
       query: (body) => ({
         url: "/login",
